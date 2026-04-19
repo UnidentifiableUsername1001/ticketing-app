@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import './loginPage.css';
-import {config} from '../../config'
+import { config } from "../../../config";
 import { Link, useNavigate } from "react-router";
 import { useAppContext } from "../../context/authContext";
 

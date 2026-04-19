@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { config } from "../../../config";
 import { useAppContext } from "../../context/authContext";
 import { Link, useNavigate } from "react-router";
-import './RegisterPage.css';
+
 
 function RegisterPage() {
     const [firstName, setFirstName] = useState(''); 
