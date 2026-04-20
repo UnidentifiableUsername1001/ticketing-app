@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import './App.css'
 import RegisterPage from './components/user-auth/registerPage'
 import LoginPage from './components/user-auth/loginPage'
+import ProtectedRoute from './components/user-auth/ProtectedRoute'
 // PLACEHOLDER - import HomePage from '../components/HomePage/HomePage'
 // PLACEHOLDER - import LoginPage from '../components/LoginPage/LoginPage'
 // PLACEHOLDER - import Dashboard from '../components/Dashboard/Dashboard'
@@ -22,7 +23,13 @@ function App() {
       <Routes>
         <Route path="/app/login" element={<LoginPage />} />
         <Route path="/app/register" element={<RegisterPage />} />
+        <Route path="/app/dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
       </Routes>
+
       
       {/* <Navbar/>
         <Routes>
