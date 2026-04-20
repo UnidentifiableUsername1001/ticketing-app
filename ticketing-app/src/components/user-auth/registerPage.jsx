@@ -29,7 +29,7 @@ function RegisterPage() {
                 })
             })
             const data = await response.json();
-            if (!response.ok) return setShowError(data.error);
+            if (!response.ok) return setShowError(data.message);
             
             sessionStorage.setItem('auth-token', data.authToken);
             sessionStorage.setItem('name', data.firstName);
