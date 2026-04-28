@@ -4,13 +4,8 @@ import './App.css'
 import RegisterPage from './components/user-auth/registerPage'
 import LoginPage from './components/user-auth/loginPage'
 import ProtectedRoute from './components/user-auth/ProtectedRoute'
-// PLACEHOLDER - import HomePage from '../components/HomePage/HomePage'
-// PLACEHOLDER - import LoginPage from '../components/LoginPage/LoginPage'
-// PLACEHOLDER - import Dashboard from '../components/Dashboard/Dashboard'
-// PLACEHOLDER - import TicketDetails from '../components/TicketDetails/TicketDetails'
-// PLACEHOLDER - import Profile from '../components/Profile/Profile'
-// PLACEHOLDER - import MyTickets from '../components/MyTickets/MyTickets'
-// PLACEHOLDER - import LoginPage from '../components/MyTeam/MyTeam' // If they're a manager
+import Dashboard from './components/dashboard/dashboard'
+import CreateTicket from './components/create-ticket/createTicket'
 
 
 
@@ -21,30 +16,20 @@ function App() {
     <>
     
       <Routes>
-        <Route path="/app/login" element={<LoginPage />} />
-        <Route path="/app/register" element={<RegisterPage />} />
-        <Route path="/app/dashboard" element={
+        <Route path='/' element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/dashboard" element={
           <ProtectedRoute>
             <Dashboard />
           </ProtectedRoute>
         } />
+        <Route path='/create-ticket' element={
+          <ProtectedRoute>
+            <CreateTicket />
+          </ProtectedRoute>
+        } />
       </Routes>
-
-      
-      {/* <Navbar/>
-        <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/app" element={<HomePage />} />
-            <Route path="/app/login" element={<LoginPage />} />
-            <Route path="/app/dashboard" element={<Dashboard />} />
-            <Route path="/app/ticketdetails" element={<TicketDetails />} />
-            <Route path="/app/profile" element={<Profile />} />
-            <Route path="/app/mytickets" element={<MyTickets />} />
-            <Route path="/app/myteam" element={<MyTeam/>} />
-        </Routes> */}
-
-
-
       </>
   )
 }

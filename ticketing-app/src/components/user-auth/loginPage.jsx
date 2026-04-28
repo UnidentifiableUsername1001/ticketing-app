@@ -31,7 +31,7 @@ function LoginPage() {
             sessionStorage.setItem('name', data.firstName);
             sessionStorage.setItem('email', data.email);
             setIsLoggedIn(true);
-            navigate('/app');
+            navigate('/dashboard');
 
         } catch (e) {
             console.log('Error fetching details: ' + e.message);

@@ -11,7 +11,7 @@ function Dashboard() {
     useEffect(() => {
         const fetchTickets = async () => {
             try {
-                let url = `${config.backendUrl}/api/tickets/`;
+                let url = `${config.backendUrl}/api/ticket/`;
                 const jwtInStore = sessionStorage.getItem('auth-token'); 
                 const response = await fetch(url, {
                     method: 'GET',
