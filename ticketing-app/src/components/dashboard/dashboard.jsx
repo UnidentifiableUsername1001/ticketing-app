@@ -21,9 +21,6 @@ function Dashboard() {
                         Authorization: `Bearer ${jwtInStore}`
                     }
                     });
-                
-
-                
                 if (!response.ok) {
                     throw new Error(`HTTP error: Status ${response.status}, ${response.message}`);
                     return;
