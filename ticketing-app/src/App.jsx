@@ -15,30 +15,27 @@ function App() {
 
   return (
     <>
-    
-      <Router>
-        <Navbar />
-          <Routes>
-            <Route path='/' element={<LoginPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } />
-            <Route path='/create-ticket' element={
-              <ProtectedRoute>
-                <CreateTicket />
-              </ProtectedRoute>
-            } />
-            <Route path='/ticket/:ticketId' element={
-              <ProtectedRoute>
-                <DetailView/>
-              </ProtectedRoute>
-            } />
-          </Routes>
-      </Router>
+      <Navbar />
+        <Routes>
+          <Route path='/' element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
+          <Route path='/create-ticket' element={
+            <ProtectedRoute>
+              <CreateTicket />
+            </ProtectedRoute>
+          } />
+          <Route path='/ticket/:ticketId' element={
+            <ProtectedRoute>
+              <DetailView/>
+            </ProtectedRoute>
+          } />
+        </Routes>
     </>
   )
 }

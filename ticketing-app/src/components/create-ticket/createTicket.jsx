@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { config } from "../../../config";
 import { useAppContext } from "../../context/authContext";
 import Select  from 'react-select';
-import {useAssignableUsers} from '../../hooks/useAssignableUsers'
+import useAssignableUsers from '../../hooks/useAssignableUsers'
 
 function CreateTicket() {
     const [title, setTitle] = useState('');

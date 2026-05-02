@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { config } from '../../../config';
-import {Select} from 'react-select';
+import Select from 'react-select';
 import useAssignableUsers from '../../hooks/useAssignableUsers';
 
 function DetailView() {
