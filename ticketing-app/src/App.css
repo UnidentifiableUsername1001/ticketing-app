@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import "tailwindcss";
 @tailwind utilities;
 
@@ -5,14 +7,28 @@
 
   /* THIS IS FOR THE REGISTRATION PAGE*/
   .form-label {
-    @apply text-wiseOffWhite text-base font-medium
+    @apply text-wiseOffWhite 
+    text-base 
+    font-semibold 
+    font-lato 
   }
 
   .form-control {
-    @apply text-wiseOffWhite border-b border-wiseSkin
+    @apply 
+      text-wiseOffWhite
+      p-1
+      border-b 
+      border-wiseSkin 
+      font-lato
+      rounded-sm
+      hover:bg-wiseSkin/20
+      hover:shadow-xl/50
+      focus:shadow-xl/100
+      focus:bg-wiseSkin/20 
+      focus:outline-wiseDarkPink
   }
 
-  .registration-component {
+  .register-login-components {
     @apply h-screen 
       bg-bgMain 
       flex 
@@ -22,10 +38,17 @@
       bg-contain
       relative
   }
+
+  @font-face {
+    font-family: wise-fonts;
+    src: url("/assets/wise_fonts.woff2") format("woff2");
+  }
 }
 
 
 @theme {
+
+  /* WISE COLORS */
   --color-nearBlack: #040300;
   --color-bgMain: #0F1225;
   --color-wiseNavy: #161E3F;
@@ -35,5 +58,10 @@
   --color-ultMutePink: #F4C1C1;
   --color-wisePaleGrey: #E7E8EC;
   --color-wiseOffWhite: #F2F2F2;
+
+  /* WISE FONTS */
+  --font-roboto: "Roboto", sans-serif;
+  --font-lato: "Lato", sans-serif;
+  --font-wise: "wise-fonts", sans-serif;
 }
 

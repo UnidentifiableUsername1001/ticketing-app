@@ -11,11 +11,10 @@ function Navbar() {
     };
 
     return (
-        <nav className='navbar-container'>
-            <div className='navbar-brand'>
-                <h2>Ticketing App</h2>
+        <nav className='bg-bgMain'>
+            <div className='p-3'>
+                <img className='h-6' src='/assets/wise_logo_primary.svg'></img>
             </div>
-
             <div className='navbar-links'>
                 {isAuthenticated ? (
                     <>
@@ -25,8 +24,7 @@ function Navbar() {
                     </>
                 ) : (
                     <>
-                        <NavLink to="/login" className="nav-item">Login</NavLink>
-                        <NavLink to="/register" className="nav-item">Register</NavLink>
+
                     </>
                 )}
             </div>

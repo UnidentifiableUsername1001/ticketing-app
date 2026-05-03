@@ -43,10 +43,10 @@ function RegisterPage() {
     }
 
     return (
-        <div className="registration-component">
+        <div className="register-login-components">
             <div className="absolute inset-0 bg-linear-to-b from-bgMain/50 to-bgMain"></div>
             <div className="p-12 -mt-64 relative">
-                <h2 className="title text-center bg-green-400 -mt-6 mb-6">Register</h2>
+                <h2 className="title text-center -mt-6 mb-3 font-wise text-wiseOffWhite text-3xl font-semibold">Register</h2>
                 <form className="bg-wiseOffWhite/10 backdrop-blur-sm rounded-sm flex flex-col p-8 gap-6 items-center" onSubmit={handleRegister}>
                         <div className="flex flex-col gap-2">
                             <label htmlFor="firstName" className="form-label"> First Name</label>
@@ -93,10 +93,12 @@ function RegisterPage() {
                                 />
                         </div>
                         <div className="flex flex-row gap-6">
-                            <button className="bg-wiseSkin p-2 rounded-full" type="submit">Register</button>                         
+                            <button type="submit" className="bg-wiseSkin p-2 rounded-full hover:cursor-pointer hover:w-20 hover:h-11 hover:shadow-xl/60 hover:text-wiseOffWhite hover:bg-wiseDarkPink">
+                                Register
+                            </button>                         
                         </div>
                 </form>
-                <p className="text-wiseOffWhite text-center"> Already a member? <Link className="text-wiseSkin underline" to="/app/login">Login</Link></p>
+                <p className="text-wiseOffWhite text-center"> Already a member? <Link className="text-wiseSkin hover:text-wiseDarkPink hover:underline" to="/login">Login</Link></p>
                 <div className="subtext-section">
                         {showError ? (
                             <>
