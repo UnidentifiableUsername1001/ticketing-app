@@ -6,7 +6,7 @@ const ProtectedRoute = ({children}) => {
     const {isLoggedIn} = useAppContext();
 
     if (!isLoggedIn) {
-        return <Navigate to="/app/login" replace />;
+        return <Navigate to="/login" replace />;
     }
 
     return children;

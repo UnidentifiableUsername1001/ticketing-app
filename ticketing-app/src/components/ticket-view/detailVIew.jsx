@@ -4,6 +4,8 @@ import { config } from '../../../config';
 import Select from 'react-select';
 import useAssignableUsers from '../../hooks/useAssignableUsers';
 import { jwtDecode } from 'jwt-decode';
+import { useAppContext } from '../../context/authContext';
+import statusMapping from '../../hooks/ticketConstants';
 
 function DetailView() {
     const [ticketTitle, setTicketTitle] = useState('');
@@ -17,6 +19,7 @@ function DetailView() {
     const jwtInStore = sessionStorage.getItem('auth-token');
     const params = useParams();
     const assignableUsers = useAssignableUsers();
+    const statusOptions = statusMapping();
 
     useEffect (() => {
         const fetchSelectedTicket = async () => {
@@ -53,9 +56,10 @@ function DetailView() {
             const currentUserId = decodedToken.user.id;
 
             const assigneeId = typeof assignedUser === 'object' ? assignedUser.value : assignedUser;
+            const destructStatus = typeof ticketStatus === 'object' ? ticketStatus.value : ticketStatus;
 
             const payload = {
-                status: ticketStatus,
+                status: destructStatus,
                 assignedUser: assigneeId,
             };
 
@@ -93,53 +97,71 @@ function DetailView() {
             console.error(e);
         }
     };
-    console.log("React sees these comments:", existingComments);
+
     return (
-        <div className='container'>
-            <div className='title-description-container'>
-                <h1 className='title'>{ticketTitle}</h1>
-                <p className='description'>{ticketDescription}</p>
+        <div className='min-h-screen bg-wisePaleGrey pt-32'>
+            <div className='grid grid-cols-20'>
+                <div className='bg-wiseOffWhite col-span-8 col-start-4 col-end-12 p-8 rounded-md shadow-md'>
+                    <div className='flex flex-col gap-8'>
+                        <div className='flex flex-col gap-8'>
+                            <h1 className='font-wise font-bold text-4xl'>{ticketTitle}</h1>
+                            <div className=''>
+                                <h3 className='font-lato font-semibold text-1xl'>Description</h3>
+                                <p className='description'>{ticketDescription}</p>
+                            </div>
+                        </div>
+                        <div className='flex flex-col gap-2'>
+                            <h3 className='font-lato font-semibold text-1xl'>Comments</h3>
+                            <input 
+                                type='text'
+                                id='comment'
+                                className='font-lato p-2 shadow-md border-b border-gray-400 rounded-b-md hover:bg-wiseSkin/15'
+                                placeholder='Add a new comment'
+                                value={newComment}
+                                onChange={(e) => setNewComment(e.target.value)}/>
+                        </div>
+                        <div className='flex flex-col gap-8'>
+                            {existingComments.map((comment, index) => (
+                                <div key={index} className=''>
+                                    {comment ? (<>
+                                        <h3><span className='font-lato font-semibold text-1xl'>{comment.postedBy?.firstName + " " + comment.postedBy?.lastName + " "}</span><span className='text-gray-500 font-lato italic pl-3 text-sm'>{new Date(comment.createdAt).toLocaleString()}</span></h3>
+                                        <p className='font-lato'>{comment.text}</p>                           
+                                    </>) : (<></>)}
+                                </div>
+                            ))}
+                        </div>
+                    </div>    
+                </div>
+                <div className='sidebar col-span-4 col-start-13'>
+                    <div className='flex flex-col gap-8'>
+                        <div>
+                            <h3 className='font-lato font-semibold text-1xl'>Status</h3>
+                            <p className='font-lato font-light text-lg'>{ticketStatus.value}</p>
+                        </div>
+                        <div>
+                            <h3 className='font-lato font-semibold text-1xl'>Assignee</h3>
+                            <p className='font-lato font-light text-lg'>{typeof assignedUser === 'object' ? assignedUser.label : assignedUser}</p>
+                        </div>
+                        <form className='flex flex-col gap-8' onSubmit={handleSubmit}>
+                            <div>
+                                <label htmlFor='assignedUser' className='font-lato font-semibold text-1xl'>Change assigned user?</label>
+                                <Select
+                                    value={assignedUser}
+                                    options={assignableUsers}
+                                    onChange={(selectedOption) => setAssignedUser(selectedOption)} />
+                            </div>
+                            <div>
+                                <label htmlFor='status' className='font-lato font-semibold text-1xl'>Change status?</label>
+                                    <Select
+                                        value={ticketStatus}
+                                        options={statusOptions}
+                                        onChange={(selectedOption) => setTicketStatus(selectedOption)} />
+                            </div>
+                            <button type='submit' className='bg-wiseSkin rounded-full w-20 self-center p-2 cursor-pointer'>Save</button>
+                        </form>
+                    </div>    
+                </div>
             </div>
-            <div className='prev-comments'>
-                <h3>Comments</h3>
-                {existingComments.map((comment, index) => (
-                    <div key={index} className='comment-div'>
-                        {comment ? (<>
-                            <h3 className='commentor-and-time'>{comment.postedBy?.firstName + " " + comment.postedBy?.lastName + " " + new Date(comment.createdAt).toLocaleString()}</h3>
-                            <p className='comment-text'>{comment.text}</p>                           
-                        </>) : (<></>)}
-                    </div>
-                ))}
-            </div>
-            <div className='status-and-assignee-aside'>
-                <h3>Status</h3>
-                <p>{ticketStatus}</p>
-                <h3>Assignee</h3>
-                <p>{typeof assignedUser === 'object' ? assignedUser.label : assignedUser}</p>  
-            </div>
-            <form onSubmit={handleSubmit}>
-                <input 
-                    type='text'
-                    id='comment'
-                    className='comment'
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}/>
-                <label htmlFor='assignedUser' className='user-dropdown'>Change assigned user?</label>
-                <Select
-                    value={assignedUser}
-                    options={assignableUsers}
-                    onChange={(selectedOption) => setAssignedUser(selectedOption)} />
-                <label htmlFor='status' className='status-dropdown'>Change status?</label>
-                    <select 
-                        id="status"
-                        value={ticketStatus}
-                        onChange={(e) => setTicketStatus(e.target.value)}>
-                        <option value="Open">Open</option>
-                        <option value="In progress">In progress</option>
-                        <option value="Closed">Closed</option>
-                    </select>
-                <button type='submit'>Save changes</button>
-            </form>
         </div>
     );
 }
