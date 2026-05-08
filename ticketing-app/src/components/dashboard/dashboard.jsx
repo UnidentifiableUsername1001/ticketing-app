@@ -52,24 +52,27 @@ function Dashboard() {
                         <tr className='text-bgMain font-bold font-lato text-xl border-b border-bgMain'>
                             <th className='py-3 px-4'>Status</th>
                             <th className='py-3 px-4'>Title</th>
+                            <th className='py-3 px-4'>Requester</th>
+                            <th className='py-3 px-4'>Requested</th>
                             <th className='py-3 px-4'>Assignee</th>
                         </tr>
                     </thead>
                     <tbody className='font-lato font-light'>
                         {tickets.map((ticket) => (
                             <tr key={ticket._id} onClick={() => {goToTicket(ticket._id)}} className='border-b border-bgMain hover:bg-wiseSkin cursor-pointer transition-colors duration-200'>
-                                <td className='py-3 px-4'>{colorRender(ticket.status)}</td>
-                                <td className='py-3 px-4'>
-                                    {ticket.title}
-                                </td>
-                                {ticket.assignedTo ? (
-                                    <td className='py-3 px-4'>
-                                        {ticket.assignedTo.firstName + " " + ticket.assignedTo.lastName}
-                                    </td> 
-                                ) : (
-                                    <td className='py-3 px-4'>Unassigned</td>    
-                                )}
-                                
+                                {ticket.status !== 'Closed' ? (
+                                    <>
+                                        <td className='py-3 px-4'>{colorRender(ticket.status)}</td>
+                                        <td className='py-3 px-4'>{ticket.title}</td>
+                                        <td className='py-3 px-4'>{ticket.createdBy.firstName + " " + ticket.createdBy.lastName}</td>
+                                        <td className='py-3 px-4'>{new Date(ticket.createdAt).toLocaleDateString()}</td>
+                                        {ticket.assignedTo ? (
+                                            <td className='py-3 px-4'>{ticket.assignedTo.firstName + " " + ticket.assignedTo.lastName}</td> 
+                                        ) : (
+                                            <td className='py-3 px-4'>Unassigned</td>    
+                                        )}
+                                    </>    
+                                ) : (<></>)}
                             </tr>
                         ))}
                     </tbody>

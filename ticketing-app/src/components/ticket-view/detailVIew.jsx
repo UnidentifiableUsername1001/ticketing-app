@@ -10,8 +10,13 @@ import statusMapping from '../../hooks/ticketConstants';
 function DetailView() {
     const [ticketTitle, setTicketTitle] = useState('');
     const [ticketDescription, setTicketDescription] = useState('');
-    const [ticketStatus, setTicketStatus] = useState('');
-    const [assignedUser, setAssignedUser] = useState('');
+
+    const [ticketStatus, setTicketStatus] = useState({});
+    const [draftStatus, setDraftStatus] = useState(null);
+
+    const [assignedUser, setAssignedUser] = useState({});
+    const [draftAssignee, setDraftAssignee] = useState(null);
+
     const [existingComments, setExistingComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const navigate = useNavigate();
@@ -20,6 +25,7 @@ function DetailView() {
     const params = useParams();
     const assignableUsers = useAssignableUsers();
     const statusOptions = statusMapping();
+    
 
     useEffect (() => {
         const fetchSelectedTicket = async () => {
@@ -37,11 +43,17 @@ function DetailView() {
                     throw new Error(`HTTP error, status ${response.status}`);
                 }
                 const data = await response.json();
+                const statusObject = {value: data.status, label: data.status};
+                const assigneeObject = {value: data.assignedTo._id, label: data.assignedTo.firstName + " " + data.assignedTo.lastName}
+                const reversedComments = data.comments.reverse();
+
                 setTicketTitle(data.title);
                 setTicketDescription(data.description);
-                setTicketStatus(data.status);
-                setAssignedUser(data.assignedTo);
-                setExistingComments(data.comments);
+                setTicketStatus(statusObject);
+                setDraftStatus(statusObject);
+                setDraftAssignee(assigneeObject);
+                setAssignedUser(assigneeObject);
+                setExistingComments(reversedComments);
             } catch (e) {
                 console.log('Error fetching data: ' + e);
             }
@@ -55,8 +67,8 @@ function DetailView() {
             const decodedToken = jwtDecode(jwtInStore);
             const currentUserId = decodedToken.user.id;
 
-            const assigneeId = typeof assignedUser === 'object' ? assignedUser.value : assignedUser;
-            const destructStatus = typeof ticketStatus === 'object' ? ticketStatus.value : ticketStatus;
+            const assigneeId = typeof draftAssignee === 'object' ? draftAssignee.value : draftAssignee;
+            const destructStatus = typeof draftStatus === 'object' ? draftStatus.value : draftStatus;
 
             const payload = {
                 status: destructStatus,
@@ -98,6 +110,7 @@ function DetailView() {
         }
     };
 
+    console.log(existingComments);
     return (
         <div className='min-h-screen bg-wisePaleGrey pt-32'>
             <div className='grid grid-cols-20'>
@@ -146,16 +159,16 @@ function DetailView() {
                             <div>
                                 <label htmlFor='assignedUser' className='font-lato font-semibold text-1xl'>Change assigned user?</label>
                                 <Select
-                                    value={assignedUser}
+                                    value={draftAssignee}
                                     options={assignableUsers}
-                                    onChange={(selectedOption) => setAssignedUser(selectedOption)} />
+                                    onChange={(selectedOption) => setDraftAssignee(selectedOption)} />
                             </div>
                             <div>
                                 <label htmlFor='status' className='font-lato font-semibold text-1xl'>Change status?</label>
                                     <Select
-                                        value={ticketStatus}
+                                        value={draftStatus}
                                         options={statusOptions}
-                                        onChange={(selectedOption) => setTicketStatus(selectedOption)} />
+                                        onChange={(selectedOption) => setDraftStatus(selectedOption)} />
                             </div>
                             <button type='submit' className='bg-wiseSkin rounded-full w-20 self-center p-2 cursor-pointer'>Save</button>
                         </form>

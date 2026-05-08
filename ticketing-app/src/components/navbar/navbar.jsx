@@ -5,7 +5,7 @@ import { useAppContext } from '../../context/authContext';
 function Navbar() {
     const navigate = useNavigate();
 
-    const isAuthenticated = !!sessionStorage.getItem('auth-token');
+    const isAuthenticated = useAppContext();
     const handleLogout = () => {
         sessionStorage.removeItem('auth-token');
         navigate('/login');

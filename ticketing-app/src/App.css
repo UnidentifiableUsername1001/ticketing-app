@@ -34,7 +34,7 @@
       flex 
       justify-center 
       items-center 
-      bg-[url('../../../public/assets/wise_people_grid_3.webp')] 
+      bg-[url('/assets/wise_people_grid_3.webp')] 
       bg-contain
       relative
   }
