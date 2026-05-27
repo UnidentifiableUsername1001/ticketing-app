@@ -32,9 +32,10 @@ function LoginPage() {
             sessionStorage.setItem('email', data.email);
             setIsLoggedIn(true);
             navigate('/dashboard');
+            console.log(data.authToken);
 
         } catch (e) {
-            console.log('Error fetching details: ' + e.message);
+            console.log('Error fetching details: ' + e);
         }
     }
 
